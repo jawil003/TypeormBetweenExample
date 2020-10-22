@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "android": "react-native run-android --deviceId=emulator-5554",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
@@ -11,15 +11,20 @@
   },
   "dependencies": {
     "react": "16.13.1",
-    "react-native": "0.63.3"
+    "react-native": "0.63.3",
+    "react-native-sqlite-storage": "^5.0.0",
+    "typeorm": "github:cuibonobo/typeorm-package"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-decorators": "^7.12.1",
     "@babel/runtime": "^7.12.1",
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/react": "^16.9.53",
     "@types/react-native": "^0.63.29",
+    "@types/react-native-sqlite-storage": "^5.0.0",
     "babel-jest": "^26.6.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.1",
     "eslint": "^7.11.0",
     "jest": "^26.6.0",
     "metro-react-native-babel-preset": "^0.63.0",
