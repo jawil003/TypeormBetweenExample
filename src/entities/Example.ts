@@ -2,7 +2,7 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-} from "typeorm";
+} from "typeorm/browser";
 
 @Entity()
 export default class ExampleEntity {

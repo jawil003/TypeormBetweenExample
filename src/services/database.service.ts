@@ -5,7 +5,7 @@ import {
 import {
   Connection,
   createConnection,
-} from "typeorm";
+} from "typeorm/browser";
 import ExampleEntity from "../entities/Example";
 
 export default class DatabaseService {

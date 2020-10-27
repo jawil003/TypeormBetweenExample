@@ -2,7 +2,7 @@ import {
   AbstractRepository,
   EntityRepository,
   FindManyOptions,
-} from "typeorm";
+} from "typeorm/browser";
 import ExampleEntity from "../entities/Example";
 
 @EntityRepository(ExampleEntity)

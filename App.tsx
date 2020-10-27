@@ -8,10 +8,9 @@ import {
   Text,
 } from "react-native";
 import {
-  getConnection,
   getCustomRepository,
   getManager,
-} from "typeorm";
+} from "typeorm/browser";
 import data from "./src/data/data";
 import { Between } from "typeorm/browser";
 import ExampleEntity from "./src/entities/Example";
