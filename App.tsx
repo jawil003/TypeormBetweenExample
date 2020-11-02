@@ -10,12 +10,17 @@ import {
 import {
   getCustomRepository,
   getManager,
+  LessThanOrEqual,
+  Raw,
 } from "typeorm/browser";
 import data from "./src/data/data";
-import { Between } from "typeorm/browser";
 import ExampleEntity from "./src/entities/Example";
 import DatabaseService from "./src/services/database.service";
 import ExampleRepository from "./src/services/example.repository";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { MoreThanOrEqual } from "typeorm";
+dayjs.extend(utc);
 
 const App: React.FC = () => {
   const [examples, setExamples] = useState<
@@ -25,6 +30,8 @@ const App: React.FC = () => {
     (async () => {
       //Init DB
       await DatabaseService.init();
+
+      await getManager().clear("example_entity");
 
       //Populate DB
       const exampleRepository = getCustomRepository(
@@ -39,9 +46,35 @@ const App: React.FC = () => {
         const foundData = await exampleRepository.findAll(
           {
             where: {
-              startDate: Between(
-                new Date(2017, 3, 10, 12, 50, 30),
-                new Date(2019, 3, 3, 10, 22, 30),
+              startDate: Raw(
+                (alias) =>
+                  `${alias} >= "${dayjs(
+                    new Date(
+                      2017,
+                      3,
+                      10,
+                      12,
+                      50,
+                      30,
+                    ),
+                  )
+                    .utc()
+                    .format(
+                      "YYYY-MM-DD HH:mm:ss.SSS",
+                    )}" AND ${alias} <= "${dayjs(
+                    new Date(
+                      2019,
+                      3,
+                      3,
+                      10,
+                      22,
+                      30,
+                    ),
+                  )
+                    .utc()
+                    .format(
+                      "YYYY-MM-DD HH:mm:ss.SSS",
+                    )}"`,
               ),
             },
           },
@@ -54,7 +87,6 @@ const App: React.FC = () => {
     })();
     return () => {
       async () => {
-        await getManager().clear(ExampleEntity);
         await DatabaseService.close();
       };
     };
@@ -62,7 +94,7 @@ const App: React.FC = () => {
   return (
     <View style={styles.root}>
       <View style={styles.inner}>
-        {examples ? (
+        {examples && examples.length > 0 ? (
           examples?.map((e) => (
             <Text>{e.name}</Text>
           ))
